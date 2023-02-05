@@ -4,6 +4,12 @@ import { verify } from 'jsonwebtoken';
 
 import authConfig from '@config/auth';
 
+interface ITokenPayload {
+  iar: number;
+  exp: number;
+  sub: string;
+}
+
 export default function isAuthenticated(
   request: Request,
   response: Response,
@@ -18,7 +24,14 @@ export default function isAuthenticated(
   const [, token] = authHeader.split(' ');
 
   try {
-    verify(token, authConfig.jwt.secret);
+    const decodedtoken = verify(token, authConfig.jwt.secret);
+
+    const { sub } = decodedtoken as ITokenPayload;
+
+    request.user = {
+      id: sub,
+    };
+
     return next();
   } catch (error) {
     throw new AppError('Invalid JWT token');

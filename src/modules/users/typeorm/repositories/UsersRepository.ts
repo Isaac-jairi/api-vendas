@@ -2,7 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import User from '../entities/User';
 
 @EntityRepository(User)
-export class UserRepository extends Repository<User> {
+export class UsersRepository extends Repository<User> {
   public async findByEmail(email: string): Promise<User | undefined> {
     const user = this.findOne({
       where: {
@@ -20,7 +20,7 @@ export class UserRepository extends Repository<User> {
     });
     return user;
   }
-  public async findById(id: string): Promise<User | undefined> {
+  public async findById(id: number): Promise<User | undefined> {
     const user = this.findOne({
       where: {
         id,
@@ -29,3 +29,4 @@ export class UserRepository extends Repository<User> {
     return user;
   }
 }
+export default UsersRepository;
