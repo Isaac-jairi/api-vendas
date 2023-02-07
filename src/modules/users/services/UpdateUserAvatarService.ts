@@ -4,16 +4,16 @@ import fs from 'fs';
 import path from 'path';
 import { getCustomRepository } from 'typeorm';
 import User from '../typeorm/entities/User';
-import { UserRepository } from '../typeorm/repositories/UsersRepository';
+import { UsersRepository } from '../typeorm/repositories/UsersRepository';
 
 interface IRequest {
-  user_id: string;
+  user_id: number;
   avatarFileName: string;
 }
 
 class UpdateUserAvatarService {
   public async execute({ user_id, avatarFileName }: IRequest): Promise<User> {
-    const usersRepository = getCustomRepository(UserRepository);
+    const usersRepository = getCustomRepository(UsersRepository);
 
     const user = await usersRepository.findById(user_id);
 
